@@ -11,6 +11,8 @@ public class Baby {
         String greeting = "Hello! I'm Baby.\nWhat can I do for you?";
         String farewell = "Bye. Hope to see you again soon!";
         Scanner scanner = new Scanner(System.in);
+        String[] items = new String[100];
+        int count = 0;
         String input;
         
         System.out.println(separator);
@@ -25,8 +27,15 @@ public class Baby {
                 System.out.println(farewell);
                 System.out.println(separator);
                 break;
+            } else if (input.startsWith("list")) {
+                for (int i = 0; i < count; i++) {
+                    System.out.println(" " + (i + 1) + ". " + items[i]);
+                }
+            } else {
+                items[count] = input;
+                System.out.println("added: " + input);
+                count++;
             }
-            System.out.println(input);
             System.out.println(separator);
         }
         
