@@ -54,7 +54,7 @@ public class Baby {
                 }
             } else if (input.startsWith("todo ")) {
                 String description = input.substring(5);
-                tasks[count] = new Task(description, 'T', null);
+                tasks[count] = new Todo(description);
                 System.out.println("Got it. I've added this task:");
                 System.out.println("  " + tasks[count].toString());
                 count++;
@@ -65,7 +65,7 @@ public class Baby {
                 if (slashIndex > 0) {
                     String description = fullInput.substring(0, slashIndex);
                     String dateInfo = "by: " + fullInput.substring(slashIndex + 5);
-                    tasks[count] = new Task(description, 'D', dateInfo);
+                    tasks[count] = new Deadline(description, dateInfo);
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + tasks[count].toString());
                     count++;
@@ -81,7 +81,8 @@ public class Baby {
                     String description = fullInput.substring(0, fromIndex);
                     String fromPart = "from: " + fullInput.substring(fromIndex + 7, toIndex);
                     String toPart = "to: " + fullInput.substring(toIndex + 5);
-                    tasks[count] = new Task(description, 'E', fromPart + " " + toPart);
+                    String dateInfo = fromPart + " " + toPart;
+                    tasks[count] = new Event(description, dateInfo);
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + tasks[count].toString());
                     count++;
