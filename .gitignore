@@ -13,6 +13,9 @@ src/main/resources/docs/
 *.iml
 bin/
 
+# Personal skills used
+.opencode/
+
 # Temp files
 _temp/
 
