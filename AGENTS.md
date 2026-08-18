@@ -9,8 +9,8 @@ Unless the user says otherwise, assume that you are assisting a student working 
 # Student profile
 
 * Prior knowledge: Basic Java and OOP concepts.
-* Level of programming experience: [to be filled]
-* IDE and level of expertise: [to be filled]
+* Level of programming experience: 3 Years
+* IDE and level of expertise: VS Code
 
 # Guidance for interacting with users
 
@@ -33,3 +33,17 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 After each prompt given, do not commit or push unless explicitly asked.
+
+## After code updates
+
+After each code change to the application:
+
+1. Review the test plan at `test/ui-test-plan.md` to ensure it covers all new features and behavior changes
+2. Update the test plan as needed to add test cases for new functionality
+3. Run the test-ui skill to validate all tests pass:
+   ```bash
+   python3 .opencode/skills/test-ui/scripts/run-ui-tests.py test/ui-test-plan.md java -cp src/main/java Baby
+   ```
+4. Report test results and fix any failing tests before committing changes
+
+The `test-ui` project-specific skill is located at `.opencode/skills/test-ui/`.
