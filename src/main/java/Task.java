@@ -1,10 +1,21 @@
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected char type;
+    protected String dateInfo;
     
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.type = 'T';
+        this.dateInfo = null;
+    }
+    
+    public Task(String description, char type, String dateInfo) {
+        this.description = description;
+        this.isDone = false;
+        this.type = type;
+        this.dateInfo = dateInfo;
     }
     
     public String getStatusIcon() {
@@ -21,6 +32,10 @@ public class Task {
     
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        String typeIcon = "[" + type + "]";
+        if (dateInfo != null) {
+            return typeIcon + "[" + getStatusIcon() + "] " + description + " (" + dateInfo + ")";
+        }
+        return typeIcon + "[" + getStatusIcon() + "] " + description;
     }
 }

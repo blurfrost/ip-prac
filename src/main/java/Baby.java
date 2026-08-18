@@ -52,10 +52,46 @@ public class Baby {
                 } else {
                     System.out.println("Task not found.");
                 }
-            } else {
-                tasks[count] = new Task(input);
-                System.out.println("added: " + input);
+            } else if (input.startsWith("todo ")) {
+                String description = input.substring(5);
+                tasks[count] = new Task(description, 'T', null);
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + tasks[count].toString());
                 count++;
+                System.out.println("Now you have " + count + " tasks in the list.");
+            } else if (input.startsWith("deadline ")) {
+                String fullInput = input.substring(9);
+                int slashIndex = fullInput.indexOf(" /by ");
+                if (slashIndex > 0) {
+                    String description = fullInput.substring(0, slashIndex);
+                    String dateInfo = "by: " + fullInput.substring(slashIndex + 5);
+                    tasks[count] = new Task(description, 'D', dateInfo);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + tasks[count].toString());
+                    count++;
+                    System.out.println("Now you have " + count + " tasks in the list.");
+                } else {
+                    System.out.println("Invalid deadline format. Use: deadline <description> /by <date>");
+                }
+            } else if (input.startsWith("event ")) {
+                String fullInput = input.substring(6);
+                int fromIndex = fullInput.indexOf(" /from ");
+                int toIndex = fullInput.indexOf(" /to ");
+                if (fromIndex > 0 && toIndex > fromIndex) {
+                    String description = fullInput.substring(0, fromIndex);
+                    String fromPart = "from: " + fullInput.substring(fromIndex + 7, toIndex);
+                    String toPart = "to: " + fullInput.substring(toIndex + 5);
+                    tasks[count] = new Task(description, 'E', fromPart + " " + toPart);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + tasks[count].toString());
+                    count++;
+                    System.out.println("Now you have " + count + " tasks in the list.");
+                } else {
+                    System.out.println("Invalid event format. Use: event <description> /from <start> /to <end>");
+                }
+            } else {
+                System.out.println("Invalid task format. Please start with 'todo', 'deadline', or 'event'.");
+                System.out.println("Available commands: todo, deadline, event, list, mark, unmark, bye");
             }
             System.out.println(separator);
         }
