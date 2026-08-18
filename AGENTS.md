@@ -44,6 +44,7 @@ After each code change to the application:
    ```bash
    python3 .opencode/skills/test-ui/scripts/run-ui-tests.py test/ui-test-plan.md java -cp src/main/java Baby
    ```
-4. Report test results and fix any failing tests before committing changes
+4. Report test results and fix any failing tests
+5. Compare the uncommitted changes (WORKTREE) with the most recent commit (HEAD). Use the /present-changes-visually skill to create a new `[relevant-change-name].html` file in the `_temp` folder.
 
 The `test-ui` project-specific skill is located at `.opencode/skills/test-ui/`.
