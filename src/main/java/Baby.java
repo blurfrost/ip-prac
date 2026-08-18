@@ -21,6 +21,9 @@ public class Baby {
         System.out.println(separator);
         
         while (true) {
+            if (!scanner.hasNextLine()) {
+                break;
+            }
             input = scanner.nextLine();
             System.out.println(separator);
             if (input.equals("bye")) {
