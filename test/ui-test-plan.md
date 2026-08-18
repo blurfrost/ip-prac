@@ -333,3 +333,74 @@ An event should include a description, a start date and end date. Example usage:
 ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
+
+## Test Case 9
+
+aim: Test whitespace normalization in commands
+inputs:
+-    list    
+- todo        fun stuff
+- deadline    homework /by     Thurs
+- event    pitch /from tmr    /to Fri
+- mark       3   
+- unmark 3   
+- list
+- todo
+- deadline
+- event
+- list
+expected_output:
+____________________________________________________________
+ ____    _    ____ __   __
+| __ )  / \  | __ )\ \ / /
+|  _ \ / _ \ |  _ \ \ V /
+| |_) / ___ \| |_) | | |
+|____/_/   \_\____/  |_|
+
+Hello! I'm Baby.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] fun stuff
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] homework (by: Thurs)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] pitch (from: tmr to: Fri)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [E][X] pitch (from: tmr to: Fri)
+____________________________________________________________
+____________________________________________________________
+OK, I've marked this task as not done yet:
+  [E][ ] pitch (from: tmr to: Fri)
+____________________________________________________________
+____________________________________________________________
+ 1. [T][ ] fun stuff
+ 2. [D][ ] homework (by: Thurs)
+ 3. [E][ ] pitch (from: tmr to: Fri)
+____________________________________________________________
+____________________________________________________________
+A todo should include a description of the task. Example usage: todo <description>
+____________________________________________________________
+____________________________________________________________
+A deadline should include a description and a due date. Example usage: deadline <description> /by <date>
+____________________________________________________________
+____________________________________________________________
+An event should include a description, a start date and end date. Example usage: event <description> /from <start-date> /to <end-date>
+____________________________________________________________
+____________________________________________________________
+ 1. [T][ ] fun stuff
+ 2. [D][ ] homework (by: Thurs)
+ 3. [E][ ] pitch (from: tmr to: Fri)
+____________________________________________________________
