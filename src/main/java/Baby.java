@@ -41,6 +41,15 @@ public class Baby {
                 } else {
                     System.out.println("Task not found.");
                 }
+            } else if (input.startsWith("unmark ")) {
+                int index = Integer.parseInt(input.substring(7)) - 1;
+                if (index >= 0 && index < count) {
+                    done[index] = false;
+                    System.out.println("OK, I've marked this task as not done yet:");
+                    System.out.println("  [ ] " + items[index]);
+                } else {
+                    System.out.println("Task not found.");
+                }
             } else {
                 items[count] = input;
                 done[count] = false;
