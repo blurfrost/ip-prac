@@ -146,8 +146,7 @@ Hello! I'm Baby.
 What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
-Invalid task format. Please start with 'todo', 'deadline', or 'event'.
-Available commands: todo, deadline, event, list, mark, unmark, bye
+Invalid command. Valid commands: todo, deadline, event, list, mark, unmark, bye
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
@@ -302,4 +301,35 @@ OK, I've marked this task as not done yet:
 ____________________________________________________________
 ____________________________________________________________
  1. [T][ ] read book
+____________________________________________________________
+
+## Test Case 8
+
+aim: Test todo, deadline, event without arguments showing usage
+inputs:
+- todo
+- deadline
+- event
+- list
+expected_output:
+____________________________________________________________
+ ____    _    ____ __   __
+| __ )  / \  | __ )\ \ / /
+|  _ \ / _ \ |  _ \ \ V /
+| |_) / ___ \| |_) | | |
+|____/_/   \_\____/  |_|
+
+Hello! I'm Baby.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+A todo should include a description of the task. Example usage: todo <description>
+____________________________________________________________
+____________________________________________________________
+A deadline should include a description and a due date. Example usage: deadline <description> /by <date>
+____________________________________________________________
+____________________________________________________________
+An event should include a description, a start date and end date. Example usage: event <description> /from <start-date> /to <end-date>
+____________________________________________________________
+____________________________________________________________
 ____________________________________________________________
