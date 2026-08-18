@@ -11,8 +11,7 @@ public class Baby {
         String greeting = "Hello! I'm Baby.\nWhat can I do for you?";
         String farewell = "Bye. Hope to see you again soon!";
         Scanner scanner = new Scanner(System.in);
-        String[] items = new String[100];
-        boolean[] done = new boolean[100];
+        Task[] tasks = new Task[100];
         int count = 0;
         String input;
         
@@ -30,29 +29,28 @@ public class Baby {
                 break;
             } else if (input.startsWith("list")) {
                 for (int i = 0; i < count; i++) {
-                    System.out.println(" " + (i + 1) + ". [" + (done[i] ? "X" : " ") + "] " + items[i]);
+                    System.out.println(" " + (i + 1) + ". " + tasks[i].toString());
                 }
             } else if (input.startsWith("mark ")) {
                 int index = Integer.parseInt(input.substring(5)) - 1;
                 if (index >= 0 && index < count) {
-                    done[index] = true;
+                    tasks[index].markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("  [X] " + items[index]);
+                    System.out.println("  " + tasks[index].toString());
                 } else {
                     System.out.println("Task not found.");
                 }
             } else if (input.startsWith("unmark ")) {
                 int index = Integer.parseInt(input.substring(7)) - 1;
                 if (index >= 0 && index < count) {
-                    done[index] = false;
+                    tasks[index].markAsUndone();
                     System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("  [ ] " + items[index]);
+                    System.out.println("  " + tasks[index].toString());
                 } else {
                     System.out.println("Task not found.");
                 }
             } else {
-                items[count] = input;
-                done[count] = false;
+                tasks[count] = new Task(input);
                 System.out.println("added: " + input);
                 count++;
             }
