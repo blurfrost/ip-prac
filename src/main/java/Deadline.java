@@ -13,6 +13,12 @@ public class Deadline extends Task {
     
     @Override
     public String getExtraInfo() {
-        return " (" + dateInfo + ")";
+        return " (by: " + dateInfo + ")";
+    }
+    
+    @Override
+    public String serialize() {
+        String done = isDone ? "true" : "false";
+        return "D|" + done + "|" + description + "|" + dateInfo;
     }
 }

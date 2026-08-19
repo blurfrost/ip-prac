@@ -1,9 +1,11 @@
 public class Event extends Task {
-    protected String dateInfo;
+    protected String startDate;
+    protected String endDate;
     
-    public Event(String description, String dateInfo) {
+    public Event(String description, String startDate, String endDate) {
         super(description);
-        this.dateInfo = dateInfo;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
     
     @Override
@@ -13,6 +15,12 @@ public class Event extends Task {
     
     @Override
     public String getExtraInfo() {
-        return " (" + dateInfo + ")";
+        return " (from: " + startDate + " to: " + endDate + ")";
+    }
+    
+    @Override
+    public String serialize() {
+        String done = isDone ? "true" : "false";
+        return "E|" + done + "|" + description + "|" + startDate + "|" + endDate;
     }
 }

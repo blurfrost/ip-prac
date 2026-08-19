@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
     
@@ -26,6 +26,14 @@ public class Task {
     public String getExtraInfo() {
         return "";
     }
+    
+    /**
+     * Serializes the task to a pipe-delimited format for file storage.
+     * Each subclass must implement this to provide its specific format.
+     *
+     * @return the serialized task string
+     */
+    public abstract String serialize();
     
     @Override
     public String toString() {

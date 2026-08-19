@@ -13,4 +13,10 @@ public class Todo extends Task {
     public String getExtraInfo() {
         return "";
     }
+    
+    @Override
+    public String serialize() {
+        String done = isDone ? "true" : "false";
+        return "T|" + done + "|" + description;
+    }
 }
