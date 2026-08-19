@@ -48,3 +48,20 @@ After each code change to the application:
 5. Compare the uncommitted changes (WORKTREE) with the most recent commit (HEAD). Use the /present-changes-visually skill to create a new `[relevant-change-name].html` file in the `_temp` folder.
 
 The `test-ui` project-specific skill is located at `.opencode/skills/test-ui/`.
+
+## Enums to Consider When Adding Features
+
+When implementing new features, consider whether existing or new enums can improve the code. Enums provide type safety, make code more maintainable, and centralize configuration.
+
+| Feature Area | Potential Enum | Notes |
+|-------------|----------------|-------|
+| Task types | `TaskType` | Implemented - Todo, Deadline, Event with command word, icon, and usage message |
+| All commands | `CommandType` | Could replace all `input.equals()` checks in Baby.java |
+| Date fields | `DateField` | For parsing `/by`, `/from`, `/to` in deadline/event commands |
+| Task status | `ResponseStatus` | Could support more than done/not done (e.g., pending, in-progress, cancel) |
+| Priority levels | `Priority` | Future feature for task importance levels |
+
+**How to use this table:**
+1. When adding new features, consult this table for relevant enum ideas
+2. Add new enums to the table as they're implemented
+3. Review the table when refactoring to identify where enums could replace magic strings

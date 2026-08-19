@@ -36,17 +36,17 @@ public class Baby {
                     for (int i = 0; i < tasks.size(); i++) {
                         System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString());
                     }
-                } else if (input.equals("todo")) {
-                    System.out.println("A todo should include a description of the task. Example usage: todo <description>");
-                } else if (input.startsWith("todo ")) {
+                } else if (input.equals(TaskType.TODO.getCommandWord())) {
+                    System.out.println("A " + TaskType.TODO.getCommandWord() + " should include a description of the task. Example usage: " + TaskType.TODO.getUsageMessage());
+                } else if (input.startsWith(TaskType.TODO.getCommandWord() + " ")) {
                     String description = StringUtils.normalizeWhitespace(input.substring(5));
                     tasks.add(new Todo(description));
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + tasks.get(tasks.size() - 1).toString());
                     System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-                } else if (input.equals("deadline")) {
-                    System.out.println("A deadline should include a description and a due date. Example usage: deadline <description> /by <date>");
-                } else if (input.startsWith("deadline ")) {
+                } else if (input.equals(TaskType.DEADLINE.getCommandWord())) {
+                    System.out.println("A " + TaskType.DEADLINE.getCommandWord() + " should include a description and a due date. Example usage: " + TaskType.DEADLINE.getUsageMessage());
+                } else if (input.startsWith(TaskType.DEADLINE.getCommandWord() + " ")) {
                     String fullInput = StringUtils.normalizeWhitespace(input.substring(9));
                     int slashIndex = fullInput.indexOf(" /by ");
                     if (slashIndex > 0) {
@@ -57,11 +57,11 @@ public class Baby {
                         System.out.println("  " + tasks.get(tasks.size() - 1).toString());
                         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     } else {
-                        throw new InvalidTaskFormatException("deadline <description> /by <date>", fullInput, "Example: deadline homework /by Sunday");
+                        throw new InvalidTaskFormatException(TaskType.DEADLINE.getUsageMessage(), fullInput, "Example: deadline homework /by Sunday");
                     }
-                } else if (input.equals("event")) {
-                    System.out.println("An event should include a description, a start date and end date. Example usage: event <description> /from <start-date> /to <end-date>");
-                } else if (input.startsWith("event ")) {
+                } else if (input.equals(TaskType.EVENT.getCommandWord())) {
+                    System.out.println("An " + TaskType.EVENT.getCommandWord() + " should include a description, a start date and end date. Example usage: " + TaskType.EVENT.getUsageMessage());
+                } else if (input.startsWith(TaskType.EVENT.getCommandWord() + " ")) {
                     String fullInput = StringUtils.normalizeWhitespace(input.substring(6));
                     int fromIndex = fullInput.indexOf(" /from ");
                     int toIndex = fullInput.indexOf(" /to ");
@@ -75,7 +75,7 @@ public class Baby {
                         System.out.println("  " + tasks.get(tasks.size() - 1).toString());
                         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     } else {
-                        throw new InvalidTaskFormatException("event <description> /from <start> /to <end>", fullInput, "Example: event meeting /from Mon 2pm /to 4pm");
+                        throw new InvalidTaskFormatException(TaskType.EVENT.getUsageMessage(), fullInput, "Example: event meeting /from Mon 2pm /to 4pm");
                     }
                 } else if (input.startsWith("mark ")) {
                     String indexStr = StringUtils.normalizeWhitespace(input.substring(5));
