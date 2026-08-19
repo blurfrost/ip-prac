@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Baby {
@@ -11,8 +13,7 @@ public class Baby {
         String greeting = "Hello! I'm Baby.\nWhat can I do for you?";
         String farewell = "Bye. Hope to see you again soon!";
         Scanner scanner = new Scanner(System.in);
-        Task[] tasks = new Task[100];
-        int count = 0;
+        List<Task> tasks = new ArrayList<>();
         String input;
         
         System.out.println(separator);
@@ -32,18 +33,17 @@ public class Baby {
                     System.out.println(separator);
                     break;
                 } else if (input.equals("list")) {
-                    for (int i = 0; i < count; i++) {
-                        System.out.println(" " + (i + 1) + ". " + tasks[i].toString());
+                    for (int i = 0; i < tasks.size(); i++) {
+                        System.out.println(" " + (i + 1) + ". " + tasks.get(i).toString());
                     }
                 } else if (input.equals("todo")) {
                     System.out.println("A todo should include a description of the task. Example usage: todo <description>");
                 } else if (input.startsWith("todo ")) {
                     String description = StringUtils.normalizeWhitespace(input.substring(5));
-                    tasks[count] = new Todo(description);
+                    tasks.add(new Todo(description));
                     System.out.println("Got it. I've added this task:");
-                    System.out.println("  " + tasks[count].toString());
-                    count++;
-                    System.out.println("Now you have " + count + " tasks in the list.");
+                    System.out.println("  " + tasks.get(tasks.size() - 1).toString());
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 } else if (input.equals("deadline")) {
                     System.out.println("A deadline should include a description and a due date. Example usage: deadline <description> /by <date>");
                 } else if (input.startsWith("deadline ")) {
@@ -52,11 +52,10 @@ public class Baby {
                     if (slashIndex > 0) {
                         String description = fullInput.substring(0, slashIndex);
                         String dateInfo = "by: " + fullInput.substring(slashIndex + 5);
-                        tasks[count] = new Deadline(description, dateInfo);
+                        tasks.add(new Deadline(description, dateInfo));
                         System.out.println("Got it. I've added this task:");
-                        System.out.println("  " + tasks[count].toString());
-                        count++;
-                        System.out.println("Now you have " + count + " tasks in the list.");
+                        System.out.println("  " + tasks.get(tasks.size() - 1).toString());
+                        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     } else {
                         throw new InvalidTaskFormatException("deadline <description> /by <date>", fullInput, "Example: deadline homework /by Sunday");
                     }
@@ -71,11 +70,10 @@ public class Baby {
                         String fromPart = "from: " + fullInput.substring(fromIndex + 7, toIndex);
                         String toPart = "to: " + fullInput.substring(toIndex + 5);
                         String dateInfo = fromPart + " " + toPart;
-                        tasks[count] = new Event(description, dateInfo);
+                        tasks.add(new Event(description, dateInfo));
                         System.out.println("Got it. I've added this task:");
-                        System.out.println("  " + tasks[count].toString());
-                        count++;
-                        System.out.println("Now you have " + count + " tasks in the list.");
+                        System.out.println("  " + tasks.get(tasks.size() - 1).toString());
+                        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     } else {
                         throw new InvalidTaskFormatException("event <description> /from <start> /to <end>", fullInput, "Example: event meeting /from Mon 2pm /to 4pm");
                     }
@@ -84,32 +82,32 @@ public class Baby {
                     try {
                         int index = Integer.parseInt(indexStr) - 1;
                         if (index < 0) {
-                            throw new InvalidIndexException(Integer.parseInt(indexStr), count, count);
+                            throw new InvalidIndexException(Integer.parseInt(indexStr), tasks.size(), tasks.size());
                         }
-                        if (index >= count) {
-                            throw new TaskNotFoundException(Integer.parseInt(indexStr), count, count);
+                        if (index >= tasks.size()) {
+                            throw new TaskNotFoundException(Integer.parseInt(indexStr), tasks.size(), tasks.size());
                         }
-                        tasks[index].markAsDone();
+                        tasks.get(index).markAsDone();
                         System.out.println("Nice! I've marked this task as done:");
-                        System.out.println("  " + tasks[index].toString());
+                        System.out.println("  " + tasks.get(index).toString());
                     } catch (NumberFormatException e) {
-                        throw new InvalidIndexException(indexStr, count, count);
+                        throw new InvalidIndexException(indexStr, tasks.size(), tasks.size());
                     }
                 } else if (input.startsWith("unmark ")) {
                     String indexStr = StringUtils.normalizeWhitespace(input.substring(7));
                     try {
                         int index = Integer.parseInt(indexStr) - 1;
                         if (index < 0) {
-                            throw new InvalidIndexException(Integer.parseInt(indexStr), count, count);
+                            throw new InvalidIndexException(Integer.parseInt(indexStr), tasks.size(), tasks.size());
                         }
-                        if (index >= count) {
-                            throw new TaskNotFoundException(Integer.parseInt(indexStr), count, count);
+                        if (index >= tasks.size()) {
+                            throw new TaskNotFoundException(Integer.parseInt(indexStr), tasks.size(), tasks.size());
                         }
-                        tasks[index].markAsUndone();
+                        tasks.get(index).markAsUndone();
                         System.out.println("OK, I've marked this task as not done yet:");
-                        System.out.println("  " + tasks[index].toString());
+                        System.out.println("  " + tasks.get(index).toString());
                     } catch (NumberFormatException e) {
-                        throw new InvalidIndexException(indexStr, count, count);
+                        throw new InvalidIndexException(indexStr, tasks.size(), tasks.size());
                     }
                 } else if (input.equals("delete")) {
                     System.out.println("A delete command should include a task number. Example usage: delete <task-number>");
@@ -118,21 +116,17 @@ public class Baby {
                     try {
                         int index = Integer.parseInt(indexStr) - 1;
                         if (index < 0) {
-                            throw new InvalidIndexException(Integer.parseInt(indexStr), count, count);
+                            throw new InvalidIndexException(Integer.parseInt(indexStr), tasks.size(), tasks.size());
                         }
-                        if (index >= count) {
-                            throw new TaskNotFoundException(Integer.parseInt(indexStr), count, count);
+                        if (index >= tasks.size()) {
+                            throw new TaskNotFoundException(Integer.parseInt(indexStr), tasks.size(), tasks.size());
                         }
                         System.out.println("OK, I've deleted this task:");
-                        System.out.println("  " + tasks[index].toString());
-                        for (int i = index; i < count - 1; i++) {
-                            tasks[i] = tasks[i + 1];
-                        }
-                        tasks[count - 1] = null;
-                        count--;
-                        System.out.println("Now you have " + count + " tasks in the list.");
+                        System.out.println("  " + tasks.get(index).toString());
+                        tasks.remove(index);
+                        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     } catch (NumberFormatException e) {
-                        throw new InvalidIndexException(indexStr, count, count);
+                        throw new InvalidIndexException(indexStr, tasks.size(), tasks.size());
                     }
                 } else {
                     throw new InvalidCommandException(input);
