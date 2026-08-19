@@ -21,85 +21,124 @@ public class Baby {
         System.out.println(separator);
         
         while (true) {
-            if (!scanner.hasNextLine()) {
-                break;
-            }
-            input = StringUtils.trim(scanner.nextLine());
-            System.out.println(separator);
-            if (input.equals("bye")) {
-                System.out.println(farewell);
+            try {
+                if (!scanner.hasNextLine()) {
+                    break;
+                }
+                input = StringUtils.trim(scanner.nextLine());
                 System.out.println(separator);
-                break;
-            } else if (input.equals("list")) {
-                for (int i = 0; i < count; i++) {
-                    System.out.println(" " + (i + 1) + ". " + tasks[i].toString());
-                }
-            } else if (input.equals("todo")) {
-                System.out.println("A todo should include a description of the task. Example usage: todo <description>");
-            } else if (input.startsWith("todo ")) {
-                String description = StringUtils.normalizeWhitespace(input.substring(5));
-                tasks[count] = new Todo(description);
-                System.out.println("Got it. I've added this task:");
-                System.out.println("  " + tasks[count].toString());
-                count++;
-                System.out.println("Now you have " + count + " tasks in the list.");
-            } else if (input.equals("deadline")) {
-                System.out.println("A deadline should include a description and a due date. Example usage: deadline <description> /by <date>");
-            } else if (input.startsWith("deadline ")) {
-                String fullInput = StringUtils.normalizeWhitespace(input.substring(9));
-                int slashIndex = fullInput.indexOf(" /by ");
-                if (slashIndex > 0) {
-                    String description = fullInput.substring(0, slashIndex);
-                    String dateInfo = "by: " + fullInput.substring(slashIndex + 5);
-                    tasks[count] = new Deadline(description, dateInfo);
+                if (input.equals("bye")) {
+                    System.out.println(farewell);
+                    System.out.println(separator);
+                    break;
+                } else if (input.equals("list")) {
+                    for (int i = 0; i < count; i++) {
+                        System.out.println(" " + (i + 1) + ". " + tasks[i].toString());
+                    }
+                } else if (input.equals("todo")) {
+                    System.out.println("A todo should include a description of the task. Example usage: todo <description>");
+                } else if (input.startsWith("todo ")) {
+                    String description = StringUtils.normalizeWhitespace(input.substring(5));
+                    tasks[count] = new Todo(description);
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + tasks[count].toString());
                     count++;
                     System.out.println("Now you have " + count + " tasks in the list.");
+                } else if (input.equals("deadline")) {
+                    System.out.println("A deadline should include a description and a due date. Example usage: deadline <description> /by <date>");
+                } else if (input.startsWith("deadline ")) {
+                    String fullInput = StringUtils.normalizeWhitespace(input.substring(9));
+                    int slashIndex = fullInput.indexOf(" /by ");
+                    if (slashIndex > 0) {
+                        String description = fullInput.substring(0, slashIndex);
+                        String dateInfo = "by: " + fullInput.substring(slashIndex + 5);
+                        tasks[count] = new Deadline(description, dateInfo);
+                        System.out.println("Got it. I've added this task:");
+                        System.out.println("  " + tasks[count].toString());
+                        count++;
+                        System.out.println("Now you have " + count + " tasks in the list.");
+                    } else {
+                        throw new InvalidTaskFormatException("deadline <description> /by <date>", fullInput, "Example: deadline homework /by Sunday");
+                    }
+                } else if (input.equals("event")) {
+                    System.out.println("An event should include a description, a start date and end date. Example usage: event <description> /from <start-date> /to <end-date>");
+                } else if (input.startsWith("event ")) {
+                    String fullInput = StringUtils.normalizeWhitespace(input.substring(6));
+                    int fromIndex = fullInput.indexOf(" /from ");
+                    int toIndex = fullInput.indexOf(" /to ");
+                    if (fromIndex > 0 && toIndex > fromIndex) {
+                        String description = fullInput.substring(0, fromIndex);
+                        String fromPart = "from: " + fullInput.substring(fromIndex + 7, toIndex);
+                        String toPart = "to: " + fullInput.substring(toIndex + 5);
+                        String dateInfo = fromPart + " " + toPart;
+                        tasks[count] = new Event(description, dateInfo);
+                        System.out.println("Got it. I've added this task:");
+                        System.out.println("  " + tasks[count].toString());
+                        count++;
+                        System.out.println("Now you have " + count + " tasks in the list.");
+                    } else {
+                        throw new InvalidTaskFormatException("event <description> /from <start> /to <end>", fullInput, "Example: event meeting /from Mon 2pm /to 4pm");
+                    }
+                } else if (input.startsWith("mark ")) {
+                    String indexStr = StringUtils.normalizeWhitespace(input.substring(5));
+                    try {
+                        int index = Integer.parseInt(indexStr) - 1;
+                        if (index < 0) {
+                            throw new InvalidIndexException(Integer.parseInt(indexStr), count, count);
+                        }
+                        if (index >= count) {
+                            throw new TaskNotFoundException(Integer.parseInt(indexStr), count, count);
+                        }
+                        tasks[index].markAsDone();
+                        System.out.println("Nice! I've marked this task as done:");
+                        System.out.println("  " + tasks[index].toString());
+                    } catch (NumberFormatException e) {
+                        throw new InvalidIndexException(indexStr, count, count);
+                    }
+                } else if (input.startsWith("unmark ")) {
+                    String indexStr = StringUtils.normalizeWhitespace(input.substring(7));
+                    try {
+                        int index = Integer.parseInt(indexStr) - 1;
+                        if (index < 0) {
+                            throw new InvalidIndexException(Integer.parseInt(indexStr), count, count);
+                        }
+                        if (index >= count) {
+                            throw new TaskNotFoundException(Integer.parseInt(indexStr), count, count);
+                        }
+                        tasks[index].markAsUndone();
+                        System.out.println("OK, I've marked this task as not done yet:");
+                        System.out.println("  " + tasks[index].toString());
+                    } catch (NumberFormatException e) {
+                        throw new InvalidIndexException(indexStr, count, count);
+                    }
+                } else if (input.equals("delete")) {
+                    System.out.println("A delete command should include a task number. Example usage: delete <task-number>");
+                } else if (input.startsWith("delete ")) {
+                    String indexStr = StringUtils.normalizeWhitespace(input.substring(7));
+                    try {
+                        int index = Integer.parseInt(indexStr) - 1;
+                        if (index < 0) {
+                            throw new InvalidIndexException(Integer.parseInt(indexStr), count, count);
+                        }
+                        if (index >= count) {
+                            throw new TaskNotFoundException(Integer.parseInt(indexStr), count, count);
+                        }
+                        System.out.println("OK, I've deleted this task:");
+                        System.out.println("  " + tasks[index].toString());
+                        for (int i = index; i < count - 1; i++) {
+                            tasks[i] = tasks[i + 1];
+                        }
+                        tasks[count - 1] = null;
+                        count--;
+                        System.out.println("Now you have " + count + " tasks in the list.");
+                    } catch (NumberFormatException e) {
+                        throw new InvalidIndexException(indexStr, count, count);
+                    }
                 } else {
-                    System.out.println("Invalid deadline format. Use: deadline <description> /by <date>");
+                    throw new InvalidCommandException(input);
                 }
-            } else if (input.equals("event")) {
-                System.out.println("An event should include a description, a start date and end date. Example usage: event <description> /from <start-date> /to <end-date>");
-            } else if (input.startsWith("event ")) {
-                String fullInput = StringUtils.normalizeWhitespace(input.substring(6));
-                int fromIndex = fullInput.indexOf(" /from ");
-                int toIndex = fullInput.indexOf(" /to ");
-                if (fromIndex > 0 && toIndex > fromIndex) {
-                    String description = fullInput.substring(0, fromIndex);
-                    String fromPart = "from: " + fullInput.substring(fromIndex + 7, toIndex);
-                    String toPart = "to: " + fullInput.substring(toIndex + 5);
-                    String dateInfo = fromPart + " " + toPart;
-                    tasks[count] = new Event(description, dateInfo);
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println("  " + tasks[count].toString());
-                    count++;
-                    System.out.println("Now you have " + count + " tasks in the list.");
-                } else {
-                    System.out.println("Invalid event format. Use: event <description> /from <start> /to <end>");
-                }
-            } else if (input.startsWith("mark ")) {
-                String indexStr = StringUtils.normalizeWhitespace(input.substring(5));
-                int index = Integer.parseInt(indexStr) - 1;
-                if (index >= 0 && index < count) {
-                    tasks[index].markAsDone();
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("  " + tasks[index].toString());
-                } else {
-                    System.out.println("Task not found.");
-                }
-            } else if (input.startsWith("unmark ")) {
-                String indexStr = StringUtils.normalizeWhitespace(input.substring(7));
-                int index = Integer.parseInt(indexStr) - 1;
-                if (index >= 0 && index < count) {
-                    tasks[index].markAsUndone();
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("  " + tasks[index].toString());
-                } else {
-                    System.out.println("Task not found.");
-                }
-            } else {
-                System.out.println("Invalid command. Valid commands: todo, deadline, event, list, mark, unmark, bye");
+            } catch (InvalidCommandException | InvalidTaskFormatException | TaskNotFoundException | InvalidIndexException e) {
+                System.out.println(e.getMessage());
             }
             System.out.println(separator);
         }
