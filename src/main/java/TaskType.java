@@ -7,10 +7,10 @@ public enum TaskType {
     TODO("todo", "[T]", "todo <description>"),
     
     /** A task with a deadline */
-    DEADLINE("deadline", "[D]", "deadline <description> /by <date>"),
+    DEADLINE("deadline", "[D]", "deadline <description> /by <date> (supports: dd MMM yyyy[ hhmm], dd/MM/yyyy[ hhmm], dd-MM-yyyy[ hhmm])"),
     
     /** A task with start and end times */
-    EVENT("event", "[E]", "event <description> /from <start-date> /to <end-date>");
+    EVENT("event", "[E]", "event <description> /from <date> /to <date> (supports: dd MMM yyyy[ hhmm], dd/MM/yyyy[ hhmm], dd-MM-yyyy[ hhmm])");
     
     private final String commandWord;
     private final String icon;

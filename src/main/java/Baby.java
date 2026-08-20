@@ -63,7 +63,8 @@ public class Baby {
                     if (slashIndex > 0) {
                         String description = fullInput.substring(0, slashIndex);
                         String dateInfo = fullInput.substring(slashIndex + 5);
-                        tasks.add(new Deadline(description, dateInfo));
+                        String parsedDate = DateParser.parseDate(dateInfo);
+                        tasks.add(new Deadline(description, parsedDate));
                         DataPersistence.saveToDisk(tasks);
                         System.out.println("Got it. I've added this task:");
                         System.out.println("  " + tasks.get(tasks.size() - 1).toString());
@@ -82,7 +83,9 @@ public class Baby {
                         String description = fullInput.substring(0, fromIndex);
                         String fromPart = fullInput.substring(fromIndex + 7, toIndex);
                         String toPart = fullInput.substring(toIndex + 5);
-                        tasks.add(new Event(description, fromPart, toPart));
+                        String parsedFrom = DateParser.parseDate(fromPart);
+                        String parsedTo = DateParser.parseDate(toPart);
+                        tasks.add(new Event(description, parsedFrom, parsedTo));
                         DataPersistence.saveToDisk(tasks);
                         System.out.println("Got it. I've added this task:");
                         System.out.println("  " + tasks.get(tasks.size() - 1).toString());
