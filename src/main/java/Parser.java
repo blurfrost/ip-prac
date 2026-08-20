@@ -44,7 +44,6 @@ public class Parser {
         }
         
         String trimmedInput = input.trim();
-        String commandWord = trimmedInput.split("\\s+")[0].toLowerCase();
         
         if (trimmedInput.equals("bye")) {
             return new CommandResult(Command.EXIT, null);

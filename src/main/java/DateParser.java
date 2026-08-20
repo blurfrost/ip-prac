@@ -170,7 +170,6 @@ public class DateParser {
         String lowerInput = input.toLowerCase(Locale.ENGLISH);
         
         int dayOfWeekIndex = -1;
-        String matchedPart = null;
         int matchLength = 0;
         
         String[] fullDayNames = {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
@@ -181,14 +180,12 @@ public class DateParser {
             
             if (lowerInput.equals(dayName)) {
                 dayOfWeekIndex = i;
-                matchedPart = dayName;
                 matchLength = dayName.length();
                 break;
             }
             
             if (lowerInput.equals(fullDayName)) {
                 dayOfWeekIndex = i;
-                matchedPart = fullDayName;
                 matchLength = fullDayName.length();
                 break;
             }
@@ -197,7 +194,6 @@ public class DateParser {
                 int remainingLength = lowerInput.length() - dayName.length();
                 if (remainingLength == 0) {
                     dayOfWeekIndex = i;
-                    matchedPart = dayName;
                     matchLength = dayName.length();
                     break;
                 }
@@ -205,7 +201,6 @@ public class DateParser {
                 char nextChar = lowerInput.charAt(dayName.length());
                 if (nextChar == ' ' || !Character.isLetter(nextChar)) {
                     dayOfWeekIndex = i;
-                    matchedPart = dayName;
                     matchLength = dayName.length();
                     break;
                 }
@@ -215,7 +210,6 @@ public class DateParser {
                 int remainingLength = lowerInput.length() - fullDayName.length();
                 if (remainingLength == 0) {
                     dayOfWeekIndex = i;
-                    matchedPart = fullDayName;
                     matchLength = fullDayName.length();
                     break;
                 }
@@ -223,7 +217,6 @@ public class DateParser {
                 char nextChar = lowerInput.charAt(fullDayName.length());
                 if (nextChar == ' ' || !Character.isLetter(nextChar)) {
                     dayOfWeekIndex = i;
-                    matchedPart = fullDayName;
                     matchLength = fullDayName.length();
                     break;
                 }
