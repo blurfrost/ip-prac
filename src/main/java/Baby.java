@@ -6,10 +6,11 @@ import java.util.Scanner;
 public class Baby {
     public static void main(String[] args) {
         Ui ui = new Ui();
+        Storage storage = new Storage();
         Scanner scanner = new Scanner(System.in);
         List<Task> tasks;
         try {
-            tasks = DataPersistence.loadFromDisk();
+            tasks = storage.load();
         } catch (IOException e) {
             System.out.println("Error loading tasks: " + e.getMessage());
             tasks = new ArrayList<>();
@@ -31,7 +32,7 @@ public class Baby {
                 if (input.equals("bye")) {
                     ui.showExitMessage();
                     ui.printSeparator();
-                    DataPersistence.saveToDisk(tasks);
+                    storage.save(tasks);
                     break;
                 } else if (input.equals("list")) {
                     for (int i = 0; i < tasks.size(); i++) {
@@ -43,7 +44,7 @@ public class Baby {
                     String description = StringUtils.normalizeWhitespace(input.substring(5));
                     StringUtils.validateNoPipe(description);
                     tasks.add(new Todo(description));
-                    DataPersistence.saveToDisk(tasks);
+                    storage.save(tasks);
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + tasks.get(tasks.size() - 1).toString());
                     System.out.println("Now you have " + tasks.size() + " tasks in the list.");
@@ -58,7 +59,7 @@ public class Baby {
                         String dateInfo = fullInput.substring(slashIndex + 5);
                         String parsedDate = DateParser.parseDate(dateInfo);
                         tasks.add(new Deadline(description, parsedDate));
-                        DataPersistence.saveToDisk(tasks);
+                        storage.save(tasks);
                         System.out.println("Got it. I've added this task:");
                         System.out.println("  " + tasks.get(tasks.size() - 1).toString());
                         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
@@ -79,7 +80,7 @@ public class Baby {
                         String parsedFrom = DateParser.parseDate(fromPart);
                         String parsedTo = DateParser.parseDate(toPart);
                         tasks.add(new Event(description, parsedFrom, parsedTo));
-                        DataPersistence.saveToDisk(tasks);
+                        storage.save(tasks);
                         System.out.println("Got it. I've added this task:");
                         System.out.println("  " + tasks.get(tasks.size() - 1).toString());
                         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
@@ -97,7 +98,7 @@ public class Baby {
                             throw new TaskNotFoundException(Integer.parseInt(indexStr), tasks.size(), tasks.size());
                         }
                         tasks.get(index).markAsDone();
-                        DataPersistence.saveToDisk(tasks);
+                        storage.save(tasks);
                         System.out.println("Nice! I've marked this task as done:");
                         System.out.println("  " + tasks.get(index).toString());
                     } catch (NumberFormatException e) {
@@ -114,7 +115,7 @@ public class Baby {
                             throw new TaskNotFoundException(Integer.parseInt(indexStr), tasks.size(), tasks.size());
                         }
                         tasks.get(index).markAsUndone();
-                        DataPersistence.saveToDisk(tasks);
+                        storage.save(tasks);
                         System.out.println("OK, I've marked this task as not done yet:");
                         System.out.println("  " + tasks.get(index).toString());
                     } catch (NumberFormatException e) {
@@ -135,7 +136,7 @@ public class Baby {
                         System.out.println("OK, I've deleted this task:");
                         System.out.println("  " + tasks.get(index).toString());
                         tasks.remove(index);
-                        DataPersistence.saveToDisk(tasks);
+                        storage.save(tasks);
                         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     } catch (NumberFormatException e) {
                         throw new InvalidIndexException(indexStr, tasks.size(), tasks.size());
