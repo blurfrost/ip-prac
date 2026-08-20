@@ -21,7 +21,7 @@ public class Baby {
         ui.showGreeting();
         ui.printSeparator();
         
-        while (true) {
+        outer: while (true) {
             try {
                 if (!scanner.hasNextLine()) {
                     break;
@@ -36,7 +36,7 @@ public class Baby {
                         ui.showExitMessage();
                         ui.printSeparator();
                         storage.save(taskList.getAll());
-                        break;
+                        break outer;
                         
                     case LIST:
                         for (int i = 0; i < taskList.size(); i++) {
