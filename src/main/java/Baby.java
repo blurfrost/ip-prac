@@ -5,14 +5,7 @@ import java.util.Scanner;
 
 public class Baby {
     public static void main(String[] args) {
-        String banner = " ____    _    ____ __   __\n"
-                + "| __ )  / \\  | __ )\\ \\ / /\n"
-                + "|  _ \\ / _ \\ |  _ \\ \\ V /\n"
-                + "| |_) / ___ \\| |_) | | |\n"
-                + "|____/_/   \\_\\____/  |_|\n";
-        String separator = "____________________________________________________________";
-        String greeting = "Hello! I'm Baby.\nWhat can I do for you?";
-        String farewell = "Bye. Hope to see you again soon!";
+        Ui ui = new Ui();
         Scanner scanner = new Scanner(System.in);
         List<Task> tasks;
         try {
@@ -23,10 +16,10 @@ public class Baby {
         }
         String input;
         
-        System.out.println(separator);
-        System.out.println(banner);
-        System.out.println(greeting);
-        System.out.println(separator);
+        ui.printSeparator();
+        ui.showBanner();
+        ui.showGreeting();
+        ui.printSeparator();
         
         while (true) {
             try {
@@ -34,10 +27,10 @@ public class Baby {
                     break;
                 }
                 input = StringUtils.trim(scanner.nextLine());
-                System.out.println(separator);
+                ui.printSeparator();
                 if (input.equals("bye")) {
-                    System.out.println(farewell);
-                    System.out.println(separator);
+                    ui.showExitMessage();
+                    ui.printSeparator();
                     DataPersistence.saveToDisk(tasks);
                     break;
                 } else if (input.equals("list")) {
@@ -153,7 +146,7 @@ public class Baby {
             } catch (InvalidCommandException | InvalidTaskFormatException | TaskNotFoundException | InvalidIndexException | PipeCharacterException | IOException e) {
                 System.out.println(e.getMessage());
             }
-            System.out.println(separator);
+            ui.printSeparator();
         }
         
         scanner.close();

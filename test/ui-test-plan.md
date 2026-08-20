@@ -183,18 +183,18 @@ Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] return book (by: Sunday)
+  [D][ ] return book (by: 23 aug 2026 0000)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [E][ ] project meeting (from: Mon 2pm to: 4pm)
+  [E][ ] project meeting (from: 24 aug 2026 0000 to: 4pm)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  1. [T][ ] read book
- 2. [D][ ] return book (by: Sunday)
- 3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+ 2. [D][ ] return book (by: 23 aug 2026 0000)
+ 3. [E][ ] project meeting (from: 24 aug 2026 0000 to: 4pm)
 ____________________________________________________________
 
 ## Test Case 6
@@ -228,39 +228,39 @@ Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] return book (by: Sunday)
+  [D][ ] return book (by: 23 aug 2026 0000)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [E][ ] project meeting (from: Mon 2pm to: 4pm)
+  [E][ ] project meeting (from: 24 aug 2026 0000 to: 4pm)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-  [D][X] return book (by: Sunday)
+  [D][X] return book (by: 23 aug 2026 0000)
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-  [E][X] project meeting (from: Mon 2pm to: 4pm)
+  [E][X] project meeting (from: 24 aug 2026 0000 to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
  1. [T][ ] read book
- 2. [D][X] return book (by: Sunday)
- 3. [E][X] project meeting (from: Mon 2pm to: 4pm)
+ 2. [D][X] return book (by: 23 aug 2026 0000)
+ 3. [E][X] project meeting (from: 24 aug 2026 0000 to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
 OK, I've marked this task as not done yet:
-  [D][ ] return book (by: Sunday)
+  [D][ ] return book (by: 23 aug 2026 0000)
 ____________________________________________________________
 ____________________________________________________________
 OK, I've marked this task as not done yet:
-  [E][ ] project meeting (from: Mon 2pm to: 4pm)
+  [E][ ] project meeting (from: 24 aug 2026 0000 to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
  1. [T][ ] read book
- 2. [D][ ] return book (by: Sunday)
- 3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+ 2. [D][ ] return book (by: 23 aug 2026 0000)
+ 3. [E][ ] project meeting (from: 24 aug 2026 0000 to: 4pm)
 ____________________________________________________________
 
 ## Test Case 7
@@ -326,10 +326,10 @@ ____________________________________________________________
 A todo should include a description of the task. Example usage: todo <description>
 ____________________________________________________________
 ____________________________________________________________
-A deadline should include a description and a due date. Example usage: deadline <description> /by <date>
+A deadline should include a description and a due date. Example usage: deadline <description> /by <date> (supports: dd MMM yyyy[ hhmm], dd/MM/yyyy[ hhmm], dd-MM-yyyy[ hhmm])
 ____________________________________________________________
 ____________________________________________________________
-An event should include a description, a start date and end date. Example usage: event <description> /from <start-date> /to <end-date>
+An event should include a description, a start date and end date. Example usage: event <description> /from <date> /to <date> (supports: dd MMM yyyy[ hhmm], dd/MM/yyyy[ hhmm], dd-MM-yyyy[ hhmm])
 ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
@@ -341,7 +341,7 @@ inputs:
 -    list    
 - todo        fun stuff
 - deadline    homework /by     Thurs
-- event    pitch /from tmr    /to Fri
+- event    pitch /from tmr    /to 21 aug 2026 0000
 - mark       3   
 - unmark 3   
 - list
@@ -374,35 +374,35 @@ Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [E][ ] pitch (from: tmr to: Fri)
+  [E][ ] pitch (from: tmr to: 21 aug 2026 0000)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-  [E][X] pitch (from: tmr to: Fri)
+  [E][X] pitch (from: tmr to: 21 aug 2026 0000)
 ____________________________________________________________
 ____________________________________________________________
 OK, I've marked this task as not done yet:
-  [E][ ] pitch (from: tmr to: Fri)
+  [E][ ] pitch (from: tmr to: 21 aug 2026 0000)
 ____________________________________________________________
 ____________________________________________________________
  1. [T][ ] fun stuff
  2. [D][ ] homework (by: Thurs)
- 3. [E][ ] pitch (from: tmr to: Fri)
+ 3. [E][ ] pitch (from: tmr to: 21 aug 2026 0000)
 ____________________________________________________________
 ____________________________________________________________
 A todo should include a description of the task. Example usage: todo <description>
 ____________________________________________________________
 ____________________________________________________________
-A deadline should include a description and a due date. Example usage: deadline <description> /by <date>
+A deadline should include a description and a due date. Example usage: deadline <description> /by <date> (supports: dd MMM yyyy[ hhmm], dd/MM/yyyy[ hhmm], dd-MM-yyyy[ hhmm])
 ____________________________________________________________
 ____________________________________________________________
-An event should include a description, a start date and end date. Example usage: event <description> /from <start-date> /to <end-date>
+An event should include a description, a start date and end date. Example usage: event <description> /from <date> /to <date> (supports: dd MMM yyyy[ hhmm], dd/MM/yyyy[ hhmm], dd-MM-yyyy[ hhmm])
 ____________________________________________________________
 ____________________________________________________________
  1. [T][ ] fun stuff
  2. [D][ ] homework (by: Thurs)
- 3. [E][ ] pitch (from: tmr to: Fri)
+ 3. [E][ ] pitch (from: tmr to: 21 aug 2026 0000)
 ____________________________________________________________
 
 ## Test Case 13
@@ -435,35 +435,35 @@ Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] homework (by: Sunday)
+  [D][ ] homework (by: 23 aug 2026 0000)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [E][ ] meeting (from: Mon 2pm to: 4pm)
+  [E][ ] meeting (from: 24 aug 2026 0000 to: 4pm)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  1. [T][ ] read book
- 2. [D][ ] homework (by: Sunday)
- 3. [E][ ] meeting (from: Mon 2pm to: 4pm)
+ 2. [D][ ] homework (by: 23 aug 2026 0000)
+ 3. [E][ ] meeting (from: 24 aug 2026 0000 to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
 OK, I've deleted this task:
-  [D][ ] homework (by: Sunday)
+  [D][ ] homework (by: 23 aug 2026 0000)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  1. [T][ ] read book
- 2. [E][ ] meeting (from: Mon 2pm to: 4pm)
+ 2. [E][ ] meeting (from: 24 aug 2026 0000 to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-  [E][X] meeting (from: Mon 2pm to: 4pm)
+  [E][X] meeting (from: 24 aug 2026 0000 to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
  1. [T][ ] read book
- 2. [E][X] meeting (from: Mon 2pm to: 4pm)
+ 2. [E][X] meeting (from: 24 aug 2026 0000 to: 4pm)
 ____________________________________________________________
 
 ## Test Case 14
@@ -529,4 +529,91 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
 Task 10 not found. Valid range: 1-1. You have 1 tasks.
+____________________________________________________________
+
+## Test Case 16
+
+aim: Test deadline date formats - all formats should store as dd MMM yyyy hhmm
+inputs:
+- deadline task1 /by 12 Oct 2025
+- deadline task2 /by Oct 12 2025 0900
+- deadline task3 /by 12/10/2025
+- deadline task4 /by 12-10-2025 1430
+- list
+expected_output:
+____________________________________________________________
+ ____    _    ____ __   __
+| __ )  / \  | __ )\ \ / /
+|  _ \ / _ \ |  _ \ \ V /
+| |_) / ___ \| |_) | | |
+|____/_/   \_\____/  |_|
+
+Hello! I'm Baby.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] task1 (by: 12 oct 2025 0000)
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] task2 (by: 12 oct 2025 0900)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] task3 (by: 12 oct 2025 0000)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] task4 (by: 12 oct 2025 1430)
+Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ 1. [D][ ] task1 (by: 12 oct 2025 0000)
+ 2. [D][ ] task2 (by: 12 oct 2025 0900)
+ 3. [D][ ] task3 (by: 12 oct 2025 0000)
+ 4. [D][ ] task4 (by: 12 oct 2025 1430)
+____________________________________________________________
+
+## Test Case 17
+
+aim: Test event date formats with different input styles
+inputs:
+- event meeting /from 12/10/2025 0900 /to 13/10/2025 1700
+- event workshop /from Oct 20 2025 /to 21 Oct 2025 1800
+- event conference /from 25-10-2025 /to 26-10-2025
+- list
+expected_output:
+____________________________________________________________
+ ____    _    ____ __   __
+| __ )  / \  | __ )\ \ / /
+|  _ \ / _ \ |  _ \ \ V /
+| |_) / ___ \| |_) | | |
+|____/_/   \_\____/  |_|
+
+Hello! I'm Baby.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] meeting (from: 12 oct 2025 0900 to: 13 oct 2025 1700)
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] workshop (from: 20 oct 2025 0000 to: 21 oct 2025 1800)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] conference (from: 25 oct 2025 0000 to: 26 oct 2025 0000)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ 1. [E][ ] meeting (from: 12 oct 2025 0900 to: 13 oct 2025 1700)
+ 2. [E][ ] workshop (from: 20 oct 2025 0000 to: 21 oct 2025 1800)
+ 3. [E][ ] conference (from: 25 oct 2025 0000 to: 26 oct 2025 0000)
 ____________________________________________________________
