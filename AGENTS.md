@@ -42,7 +42,7 @@ After each code change to the application:
 2. Update the test plan as needed to add test cases for new functionality
 3. Run the test-ui skill to validate all tests pass:
    ```bash
-   python3 .opencode/skills/test-ui/scripts/run-ui-tests.py test/ui-test-plan.md java -cp src/main/java Baby
+   python3 .opencode/skills/test-ui/scripts/run-ui-tests.py test/ui-test-plan.md java -cp build/libs/duke.jar baby.Baby
    ```
 4. Report test results and fix any failing tests
 5. Compare the uncommitted changes (WORKTREE) with the most recent commit (HEAD). Use the /present-changes-visually skill to create a new `[relevant-change-name].html` file in the `_temp` folder.
