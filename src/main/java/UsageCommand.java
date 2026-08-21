@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class UsageCommand extends Command {
     private final String commandWord;
     
