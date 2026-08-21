@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class MarkCommand extends Command {
     private final int index;
     

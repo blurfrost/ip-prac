@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class DeleteCommand extends Command {
     private final int index;
     
