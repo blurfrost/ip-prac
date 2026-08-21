@@ -1,0 +1,14 @@
+import java.util.List;
+
+public class ExitCommand extends Command {
+    @Override
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws Exception {
+        ui.showExitMessage();
+        storage.save(taskList.getAll());
+    }
+    
+    @Override
+    public boolean isExit() {
+        return true;
+    }
+}

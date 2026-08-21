@@ -3,82 +3,65 @@ import java.util.List;
 
 public class Parser {
     
-    public enum Command {
-        ADD_TODO,
-        ADD_DEADLINE,
-        ADD_EVENT,
-        LIST,
-        MARK,
-        UNMARK,
-        DELETE,
-        EXIT,
-        INVALID_COMMAND,
-        USAGE_ONLY
-    }
-    
-    public static class CommandResult {
-        private final Command command;
-        private final List<String> arguments;
-        
-        public CommandResult(Command command, List<String> arguments) {
-            this.command = command;
-            this.arguments = arguments != null ? arguments : new ArrayList<>();
-        }
-        
-        public Command getCommand() {
-            return command;
-        }
-        
-        public List<String> getArguments() {
-            return arguments;
-        }
-        
-        public String getFirstArgument() {
-            return arguments.isEmpty() ? null : arguments.get(0);
-        }
-    }
-    
-    public static CommandResult parse(String input) {
+    public static Command parse(String input) {
         if (input == null || input.trim().isEmpty()) {
-            return new CommandResult(Command.INVALID_COMMAND, null);
+            throw new InvalidCommandException(input);
         }
         
         String trimmedInput = input.trim();
         
         if (trimmedInput.equals("bye")) {
-            return new CommandResult(Command.EXIT, null);
+            return new ExitCommand();
         } else if (trimmedInput.equals("list")) {
-            return new CommandResult(Command.LIST, null);
+            return new ListCommand();
         } else if (input.equals(TaskType.TODO.getCommandWord())) {
-            return new CommandResult(Command.USAGE_ONLY, null);
+            return new UsageCommand(TaskType.TODO.getCommandWord());
         } else if (input.startsWith(TaskType.TODO.getCommandWord() + " ")) {
             String description = StringUtils.normalizeWhitespace(input.substring(5));
-            return new CommandResult(Command.ADD_TODO, List.of(description));
+            return new AddTodoCommand(description);
         } else if (input.equals(TaskType.DEADLINE.getCommandWord())) {
-            return new CommandResult(Command.USAGE_ONLY, null);
+            return new UsageCommand(TaskType.DEADLINE.getCommandWord());
         } else if (input.startsWith(TaskType.DEADLINE.getCommandWord() + " ")) {
             return parseDeadlineInput(input);
         } else if (input.equals(TaskType.EVENT.getCommandWord())) {
-            return new CommandResult(Command.USAGE_ONLY, null);
+            return new UsageCommand(TaskType.EVENT.getCommandWord());
         } else if (input.startsWith(TaskType.EVENT.getCommandWord() + " ")) {
             return parseEventInput(input);
         } else if (input.startsWith("mark ")) {
             String indexStr = StringUtils.normalizeWhitespace(input.substring(5));
-            return new CommandResult(Command.MARK, List.of(indexStr));
+            int index;
+            try {
+                index = Integer.parseInt(indexStr) - 1;
+            } catch (NumberFormatException e) {
+                throw new InvalidIndexException(indexStr, 1, 1);
+            }
+            return new MarkCommand(index);
         } else if (input.startsWith("unmark ")) {
             String indexStr = StringUtils.normalizeWhitespace(input.substring(7));
-            return new CommandResult(Command.UNMARK, List.of(indexStr));
+            int index;
+            try {
+                index = Integer.parseInt(indexStr) - 1;
+            } catch (NumberFormatException e) {
+                throw new InvalidIndexException(indexStr, 1, 1);
+            }
+            return new UnmarkCommand(index);
         } else if (input.equals("delete")) {
-            return new CommandResult(Command.USAGE_ONLY, null);
+            return new UsageCommand("delete");
         } else if (input.startsWith("delete ")) {
             String indexStr = StringUtils.normalizeWhitespace(input.substring(7));
-            return new CommandResult(Command.DELETE, List.of(indexStr));
+            int index;
+            try {
+                index = Integer.parseInt(indexStr) - 1;
+            } catch (NumberFormatException e) {
+                throw new InvalidIndexException(indexStr, 1, 1);
+            }
+            return new DeleteCommand(index);
         } else {
-            return new CommandResult(Command.INVALID_COMMAND, null);
+            throw new InvalidCommandException(input);
         }
     }
     
-    private static CommandResult parseDeadlineInput(String input) {
+    private static AddDeadlineCommand parseDeadlineInput(String input) {
         String fullInput = StringUtils.normalizeWhitespace(input.substring(9));
         StringUtils.validateNoPipe(fullInput);
         int slashIndex = fullInput.indexOf(" /by ");
@@ -86,13 +69,13 @@ public class Parser {
             String description = fullInput.substring(0, slashIndex);
             String dateInfo = fullInput.substring(slashIndex + 5);
             String parsedDate = DateParser.parseDate(dateInfo);
-            return new CommandResult(Command.ADD_DEADLINE, List.of(description, parsedDate));
+            return new AddDeadlineCommand(description, parsedDate);
         } else {
             throw new InvalidTaskFormatException(TaskType.DEADLINE.getUsageMessage(), fullInput, "Example: deadline homework /by Sunday");
         }
     }
     
-    private static CommandResult parseEventInput(String input) {
+    private static AddEventCommand parseEventInput(String input) {
         String fullInput = StringUtils.normalizeWhitespace(input.substring(6));
         StringUtils.validateNoPipe(fullInput);
         int fromIndex = fullInput.indexOf(" /from ");
@@ -103,7 +86,7 @@ public class Parser {
             String toPart = fullInput.substring(toIndex + 5);
             String parsedFrom = DateParser.parseDate(fromPart);
             String parsedTo = DateParser.parseDate(toPart);
-            return new CommandResult(Command.ADD_EVENT, List.of(description, parsedFrom, parsedTo));
+            return new AddEventCommand(description, parsedFrom, parsedTo);
         } else {
             throw new InvalidTaskFormatException(TaskType.EVENT.getUsageMessage(), fullInput, "Example: event meeting /from Mon 2pm /to 4pm");
         }
