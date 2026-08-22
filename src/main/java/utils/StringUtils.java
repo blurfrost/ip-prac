@@ -1,7 +1,5 @@
 package utils;
 
-import exception.PipeCharacterException;
-
 public class StringUtils {
     
     public static String trim(String s) {
