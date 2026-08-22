@@ -31,23 +31,31 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 ## Git
 
 Use lightweight tags unless the user requests an annotated tag.
-When proposing or creating a commit message, include enough detail to explain the rationale for the change.
+When proposing a commit message, include enough detail to explain the rationale for the change.
 After each prompt given, do not commit or push unless explicitly asked.
+
+## Testing
+
+### JUnit Tests:
+
+* Located in `src/test/java/` with package structure matching the main code
+* Each model class (e.g., Todo, Deadline, Event) has corresponding test classes (TodoTest, DeadlineTest, EventTest)
+* Run tests with: `./gradlew test`
+* Add new tests for all public methods and edge cases when implementing features
+
+### UI Tests:
+
+* The `test/ui-test-plan.md` file and associated `test-ui` skill have been deprecated in favor of JUnit tests
+* No UI tests are currently implemented
 
 ## After code updates
 
 After each code change to the application:
 
-1. Review the test plan at `test/ui-test-plan.md` to ensure it covers all new features and behavior changes
-2. Update the test plan as needed to add test cases for new functionality
-3. Run the test-ui skill to validate all tests pass:
-   ```bash
-   python3 .opencode/skills/test-ui/scripts/run-ui-tests.py test/ui-test-plan.md java -cp build/libs/duke.jar baby.Baby
-   ```
-4. Report test results and fix any failing tests
-5. Compare the uncommitted changes (WORKTREE) with the most recent commit (HEAD). Use the /present-changes-visually skill to create a new `[relevant-change-name].html` file in the `_temp` folder.
-
-The `test-ui` project-specific skill is located at `.opencode/skills/test-ui/`.
+1. Run `./gradlew test` to validate all JUnit tests pass
+2. Add new JUnit tests for any newly implemented methods or behavior changes
+3. Report test results and fix any failing tests
+4. Compare the uncommitted changes (WORKTREE) with the most recent commit (HEAD). Use the /present-changes-visually skill to create a new `[relevant-change-name].html` file in the `_temp` folder.
 
 ## Enums to Consider When Adding Features
 
