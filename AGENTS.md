@@ -42,20 +42,24 @@ After each prompt given, do not commit or push unless explicitly asked.
 * Each model class (e.g., Todo, Deadline, Event) has corresponding test classes (TodoTest, DeadlineTest, EventTest)
 * Run tests with: `./gradlew test`
 * Add new tests for all public methods and edge cases when implementing features
+* **Code coverage target: At least 80%** - Ensure tests achieve this minimum coverage
 
-### UI Tests:
+### Code Coverage:
 
-* The `test/ui-test-plan.md` file and associated `test-ui` skill have been deprecated in favor of JUnit tests
-* No UI tests are currently implemented
+* Generated via Gradle's JaCoCo plugin: `./gradlew test jacocoTestReport`
+* HTML report available at: `build/reports/jacoco/test/html/index.html`
+* Coverage Gutters extension shows inline coverage in VS Code
 
-## After code updates
+### After code updates
 
 After each code change to the application:
 
 1. Run `./gradlew test` to validate all JUnit tests pass
 2. Add new JUnit tests for any newly implemented methods or behavior changes
-3. Report test results and fix any failing tests
-4. Compare the uncommitted changes (WORKTREE) with the most recent commit (HEAD). Use the /present-changes-visually skill to create a new `[relevant-change-name].html` file in the `_temp` folder.
+3. Verify code coverage is at least 80%: `./gradlew test jacocoTestReport`
+4. Report test results and fix any failing tests or coverage gaps
+5. Compare the uncommitted changes (WORKTREE) with the most recent commit (HEAD). Use the /present-changes-visually skill to create a new `[relevant-change-name].html` file in the `_temp` folder.
+6. Do not `git add` or `git commit` the updated files. Only do so with my permission.
 
 ## Enums to Consider When Adding Features
 
